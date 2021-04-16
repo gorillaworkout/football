@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React,{useEffect,useState} from 'react';
 import './App.css';
+import {Switch,Route} from 'react-router-dom'
+import {toast} from 'react-toastify'  
+import 'react-toastify/dist/ReactToastify.css' 
+import Home from './Pages/Home/Home'
+import Login from './Pages/Login/Login'
+import Pilihan from './Pages/Pilihan/Pilihan'
+import Register from './Pages/Register/Register'
+import Axios from 'axios'
+import {API_URL} from './Helpers/apiUrl'
+import { LoginFunc } from './redux/Actions'
+import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux'
+import Detail from './Pages/Detail/Detail'
+function App(props) {
+  const dispatch = useDispatch()
 
-function App() {
+  toast.configure()
+
+  const [loading,setLoading]=useState(true)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path='/' component={Home}/>
+      <Route exact path='/detail/:id' component={Detail}/>
+    </Switch>
   );
 }
 
-export default App;
+const Mapstatetoprops=({Auth})=>{
+  return {
+    ...Auth
+  }
+}
+
+export default connect(Mapstatetoprops,{})(App);
